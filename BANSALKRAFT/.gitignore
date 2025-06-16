@@ -1,11 +1,33 @@
-# Django
+# Ignore Python cache files
 __pycache__/
 *.py[cod]
+
+# Ignore environment folder
+myenv/
+env/
+venv/
+
+# Ignore sensitive files
+.env
 db.sqlite3
 
-# Environment
-.env
-myenv/
-
-# VS Code
+# VS Code project settings (optional)
 .vscode/
+
+# macOS system files
+.DS_Store
+
+# Compiled files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.so
+*.egg-info/
+
+# Byte-compiled / optimized / DLL files
+*.pyd
+*.pdb
+
+# SQLite DB backup files
+*.sqlite3-journal
