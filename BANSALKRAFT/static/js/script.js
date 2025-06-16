@@ -93,7 +93,7 @@ if (contactForm) {
 
     // ✅ Let the form submit to Django as normal
     // You can show a message after backend response instead of here
-    alert('Thank you for your message! We will get back to you soon.');
+     
   });
 }
 

@@ -1,0 +1,11 @@
+# Django
+__pycache__/
+*.py[cod]
+db.sqlite3
+
+# Environment
+.env
+myenv/
+
+# VS Code
+.vscode/

@@ -1,4 +1,4 @@
- /* Reset and Base Styles */
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -6,10 +6,14 @@
 }
 
 :root {
-  --primary-color: #B89C6F; /* Golden/Beige from logo */
-  --secondary-color: #3B3A36; /* Dark brown/charcoal from logo */
-  --text-color: #3B3A36; /* Dark brown/charcoal */
-  --light-gray: #F8F6F1; /* Very light golden/beige, updated to match slider image background */
+  --primary-color: #B89C6F;
+  /* Golden/Beige from logo */
+  --secondary-color: #3B3A36;
+  /* Dark brown/charcoal from logo */
+  --text-color: #3B3A36;
+  /* Dark brown/charcoal */
+  --light-gray: #F8F6F1;
+  /* Very light golden/beige, updated to match slider image background */
   --white: #ffffff;
   --transition: all 0.3s ease;
 }
@@ -40,13 +44,16 @@ header {
   width: 100%;
   top: 0;
   z-index: 1000;
-  transform: translateY(-100%); /* Initial state: off-screen above */
+  transform: translateY(-100%);
+  /* Initial state: off-screen above */
   opacity: 0;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Smooth transition */
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  /* Smooth transition */
 }
 
 header.header-animate {
-  transform: translateY(0); /* Final state: visible */
+  transform: translateY(0);
+  /* Final state: visible */
   opacity: 1;
 }
 
@@ -81,7 +88,7 @@ header .container {
   gap: 5px;
 }
 
-.nav-container nav ul li > a {
+.nav-container nav ul li>a {
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
@@ -91,26 +98,34 @@ header .container {
   font-size: 16px;
 }
 
-.nav-container nav ul li > a::after {
+.nav-container nav ul li>a::after {
   content: '';
   position: absolute;
-  left: 15px; /* Start at the text content area */
-  right: 15px; /* End at the text content area */
-  bottom: 5px; /* Adjust this value to position the line correctly */
-  height: 2px; /* Thickness of the line */
+  left: 15px;
+  /* Start at the text content area */
+  right: 15px;
+  /* End at the text content area */
+  bottom: 5px;
+  /* Adjust this value to position the line correctly */
+  height: 2px;
+  /* Thickness of the line */
   background-color: var(--primary-color);
-  transform: scaleX(0); /* Initial state: line is not visible */
-  transform-origin: left; /* Animation starts from the left */
-  transition: transform 0.3s ease-out; /* Animation for the line */
+  transform: scaleX(0);
+  /* Initial state: line is not visible */
+  transform-origin: left;
+  /* Animation starts from the left */
+  transition: transform 0.3s ease-out;
+  /* Animation for the line */
 }
 
-.nav-container nav ul li > a:hover::after,
-.nav-container nav ul li > a.active::after {
-  transform: scaleX(1); /* Line appears on hover or when active */
+.nav-container nav ul li>a:hover::after,
+.nav-container nav ul li>a.active::after {
+  transform: scaleX(1);
+  /* Line appears on hover or when active */
 }
 
-.nav-container nav ul li > a:hover,
-.nav-container nav ul li > a.active {
+.nav-container nav ul li>a:hover,
+.nav-container nav ul li>a.active {
   color: var(--primary-color);
 }
 
@@ -198,7 +213,7 @@ header .container {
     width: 100%;
   }
 
-  nav ul li > a {
+  nav ul li>a {
     display: block;
     padding: 10px 0;
     width: 100%;
@@ -208,7 +223,7 @@ header .container {
     height: auto;
     min-height: 300px;
   }
-  
+
   .slider-image {
     height: auto;
     max-height: 300px;
@@ -218,7 +233,10 @@ header .container {
 
 /* Hero Section */
 .hero {
-  padding: 120px 0;
+  padding-top: 120px;
+  padding-right: 90px;
+  padding-bottom: 90px;
+  padding-left: 90px;
   background-color: var(--light-gray);
   position: relative;
   overflow: hidden;
@@ -251,7 +269,7 @@ header .container {
 }
 
 .hero-content h2 span {
-  color:  var(--primary-color);
+  color: var(--primary-color);
 }
 
 .hero-content p {
@@ -329,26 +347,29 @@ header .container {
 
 /* Mobile Navigation Button */
 .mobile-menu-btn {
-    display: none;
+  display: none;
 }
 
 @media (max-width: 992px) {
-    .hero .container {
-        flex-direction: column;
-        text-align: center;
-    }
-    .hero-content {
-        padding-right: 0;
-        max-width: 100%;
-        margin-bottom: 40px;
-    }
-    .hero-image-slider {
-        margin-left: 0;
-        max-width: 100%;
-    }
-    .hero-content h2 {
-        font-size: 36px;
-    }
+  .hero .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content {
+    padding-right: 0;
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .hero-image-slider {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  .hero-content h2 {
+    font-size: 36px;
+  }
 }
 
 .dashboard-mockup {
@@ -367,7 +388,7 @@ header .container {
 .dot {
   width: 10px;
   height: 10px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   border-radius: 50%;
 }
 
@@ -378,7 +399,7 @@ header .container {
 }
 
 .dashboard-item {
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   border-radius: 5px;
 }
 
@@ -407,7 +428,7 @@ header .container {
 
 /* About Section */
 .about {
-  padding: 80px 0;
+  padding: 40px 0;
   background-color: var(--white);
 }
 
@@ -420,7 +441,7 @@ header .container {
 }
 
 .about h2 span {
-  color:  var(--primary-color);
+  color: var(--primary-color);
 }
 
 .about h2::after {
@@ -428,7 +449,7 @@ header .container {
   display: block;
   width: 80px;
   height: 3px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   margin: 15px auto 0;
 }
 
@@ -463,7 +484,7 @@ header .container {
 }
 
 .chart-bar {
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   width: 100%;
   height: 80px;
   border-radius: 8px;
@@ -481,7 +502,7 @@ header .container {
 .chart-dots .dot {
   width: 12px;
   height: 12px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   border-radius: 50%;
   position: relative;
 }
@@ -496,12 +517,12 @@ header .container {
 
 .line {
   height: 2px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   margin: 8px 0;
   opacity: 0.4;
   border-style: dashed;
   border-width: 1px 0 0 0;
-  border-color:  var(--primary-color);
+  border-color: var(--primary-color);
   background: none;
 }
 
@@ -551,67 +572,67 @@ header .container {
 .hero-image-slider.animate-in,
 .product-card.animate-in,
 .service-card.animate-in {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Global Section Subtitle */
 .section-subtitle {
-    text-align: center;
-    color: var(--text-color);
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Products Section */
 .products {
-    padding: 60px 0;
-    background-color: var(--light-gray);
-    text-align: center;
+  padding: 60px 0;
+  background-color: var(--light-gray);
+  text-align: center;
 }
 
 .products .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .products h2 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    position: relative;
-    color: var(--dark-blue);
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  position: relative;
+  color: var(--dark-blue);
 }
 
 .products h2 span {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .products h2::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 3px;
-    background-color: var(--primary-color);
-    margin: 15px auto 50px;
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-color);
+  margin: 15px auto 50px;
 }
 
 .products .section-subtitle {
-    /* This rule can override the global .section-subtitle if needed, but for centering, it's covered by the global rule now */
-    /* font-size: 18px; */
-    /* margin-bottom: 40px; */
-    /* line-height: 1.6; */
+  /* This rule can override the global .section-subtitle if needed, but for centering, it's covered by the global rule now */
+  /* font-size: 18px; */
+  /* margin-bottom: 40px; */
+  /* line-height: 1.6; */
 }
 
 .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
 }
 
 .product-card {
@@ -714,7 +735,7 @@ header .container {
 }
 
 .services h2 span {
-  color:  var(--primary-color);
+  color: var(--primary-color);
 }
 
 .services h2::after {
@@ -722,7 +743,7 @@ header .container {
   display: block;
   width: 80px;
   height: 3px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   margin: 15px auto 0;
 }
 
@@ -793,7 +814,7 @@ header .container {
 }
 
 .testimonials h2 span {
-  color:  var(--primary-color);
+  color: var(--primary-color);
 }
 
 .testimonials h2::after {
@@ -801,7 +822,7 @@ header .container {
   display: block;
   width: 80px;
   height: 3px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   margin: 15px auto 0;
 }
 
@@ -834,7 +855,7 @@ header .container {
 .client-avatar {
   width: 50px;
   height: 50px;
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   color: var(--white);
   border-radius: 50%;
   display: flex;
@@ -875,170 +896,185 @@ header .container {
 
 /* Contact Section */
 .contact {
-    padding: 80px 0;
-    background-color: var(--white);
-    text-align: center;
+  padding: 80px 0;
+  background-color: var(--white);
+  text-align: center;
 }
 
 .contact .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .contact h2 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    position: relative;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  position: relative;
 }
 
 .contact h2 span {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .contact h2::after {
-    content: "";
-    display: block;
-    width: 80px;
-    height: 3px;
-    background-color: var(--primary-color);
-    margin: 15px auto 50px;
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-color);
+  margin: 15px auto 50px;
 }
 
 .contact-content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    margin-top: 40px;
-    text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 40px;
+  text-align: left;
 }
 
 .contact-info,
 .contact-form {
-    flex: 1;
-    min-width: 300px;
+  flex: 1;
+  min-width: 300px;
 }
 
 .contact-info h3,
 .contact-form h3 {
-    font-size: 28px;
-    color: var(--dark-blue);
-    margin-bottom: 25px;
+  font-size: 28px;
+  color: var(--dark-blue);
+  margin-bottom: 25px;
 }
 
 .address-map-container {
-    display: flex;
-    flex-direction: row; /* Changed to row for all screen sizes */
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    gap: 20px;
-    margin-bottom: 20px;
-    align-items: flex-start;
-    justify-content: center; /* Center items for better mobile appearance */
+  display: flex;
+  flex-direction: row;
+  /* Changed to row for all screen sizes */
+  flex-wrap: wrap;
+  /* Allow items to wrap to the next line */
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  justify-content: center;
+  /* Center items for better mobile appearance */
 }
 
 @media (max-width: 767px) {
-    .address-map-container .contact-item {
-        width: 100%; /* Take full width on small screens */
-    }
-    .address-map-container iframe {
-        width: 100%; /* Take full width on small screens */
-        height: 250px; /* Maintain a reasonable height */
-        margin-left: 0; /* Remove left margin */
-    }
+  .address-map-container .contact-item {
+    width: 100%;
+    /* Take full width on small screens */
+  }
+
+  .address-map-container iframe {
+    width: 100%;
+    /* Take full width on small screens */
+    height: 250px;
+    /* Maintain a reasonable height */
+    margin-left: 0;
+    /* Remove left margin */
+  }
 }
 
 @media (min-width: 768px) {
-    .address-map-container .contact-item {
-        flex: 1; /* Allow contact item to take available space */
-    }
+  .address-map-container .contact-item {
+    flex: 1;
+    /* Allow contact item to take available space */
+  }
 
-    .address-map-container iframe {
-        width: 250px; /* Set a specific width for the map */
-        height: 250px; /* Set a specific height for the map */
-        margin-left: 20px; /* Add some space between address and map */
-    }
+  .address-map-container iframe {
+    width: 250px;
+    /* Set a specific width for the map */
+    height: 250px;
+    /* Set a specific height for the map */
+    margin-left: 20px;
+    /* Add some space between address and map */
+  }
 }
 
 .contact-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
 
 .contact-icon {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    background-color: var(--primary-color-light);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 15px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-color-light);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
 }
 
 .contact-icon svg {
-    stroke: var(--primary-color);
+  stroke: var(--primary-color);
 }
 
 .contact-details h4 {
-    font-size: 18px;
-    color: var(--dark-blue);
-    margin-bottom: 5px;
+  font-size: 18px;
+  color: var(--dark-blue);
+  margin-bottom: 5px;
 }
 
 .contact-details p {
-    font-size: 16px;
-    color: var(--text-color);
-    line-height: 1.6;
+  font-size: 16px;
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 .form-row {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .form-group {
-    flex: 1;
-    margin-bottom: 20px;
+  flex: 1;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-    display: block;
-    font-size: 16px;
-    color: var(--dark-blue);
-    margin-bottom: 8px;
-    font-weight: 500;
+  display: block;
+  font-size: 16px;
+  color: var(--dark-blue);
+  margin-bottom: 8px;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    font-size: 16px;
-    color: var(--text-color);
-    font-family: 'Inter', sans-serif;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd; /* Default border */
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--white);
+  box-shadow: 0 0 0 1px rgba(184, 156, 111, 0.2); /* Subtle default highlight */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(184, 156, 111, 0.2);
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 156, 111, 0.4); /* More pronounced highlight on focus */
 }
 
 .form-group textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 .contact-form .btn.primary {
-    padding: 15px 30px;
-    font-size: 17px;
-    width: auto;
+  padding: 15px 30px;
+  font-size: 17px;
+  width: auto;
 }
 
 /* Footer */
@@ -1093,7 +1129,7 @@ header .container {
 }
 
 .social-links a:hover {
-  background-color:  #A0875C;
+  background-color: #A0875C;
 }
 
 .footer-section ul {
@@ -1111,7 +1147,7 @@ header .container {
 }
 
 .footer-section ul li a:hover {
-  color:  var(--primary-color);
+  color: var(--primary-color);
 }
 
 .footer-contact-item {
@@ -1381,12 +1417,35 @@ header .container {
   margin: 4rem 0;
 }
 
-.network-section h3 {
+/* .network-section h3 {
   text-align: center;
   margin-bottom: 2rem;
   color: #333;
   font-size: 1.8rem;
+} */
+
+.network-section h3 {
+  font-size: 32px;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  color: #1a1a1a; /* black for 'Our' */
 }
+
+.network-section h3 span {
+  color: #b4986b; /* golden-brown for 'Services' */
+  position: relative;
+}
+
+.network-section h3 span::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 3px;
+  background-color: #b4986b;
+  bottom: -5px;
+  left: 0;
+}
+
 
 .distribution-content {
   display: flex;
@@ -1452,261 +1511,271 @@ header .container {
 
 /* Network Section Styles */
 .client-logos-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 2rem 0;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
 }
 
 .client-logos-track {
-    display: flex;
-    animation: scroll 30s linear infinite;
-    width: max-content;
+  display: flex;
+  animation: scroll 30s linear infinite;
+  width: max-content;
 }
 
 .client-logos-track:hover {
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 .client-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 2rem;
-    min-width: 200px;
-    transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2rem;
+  min-width: 200px;
+  transition: transform 0.3s ease;
 }
 
 .client-logo:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .client-logo img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-    filter: none;
-    transition: transform 0.3s ease;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  filter: none;
+  transition: transform 0.3s ease;
 }
 
 .client-logo:hover img {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .client-logo span {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-    font-weight: 500;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
 }
 
 @keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(calc(-200px * 7));
-    }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-200px * 7));
+  }
 }
 
 /* Add a gradient overlay on the sides for better visual effect */
 .client-logos-container::before,
 .client-logos-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 100px;
-    height: 100%;
-    z-index: 2;
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
 }
 
 .client-logos-container::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 .client-logos-container::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+  right: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 /* Distribution Partners Section Styles */
 .distribution-section {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .distribution-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
 }
 
 .map-container {
-    background: #fff;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #india-map {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .state {
-    transition: fill 0.3s ease;
-    cursor: pointer;
+  transition: fill 0.3s ease;
+  cursor: pointer;
 }
 
 .state:hover {
-    fill: #2979ff;
+  fill: #2979ff;
 }
 
 .state.active {
-    fill: #2979ff;
+  fill: #2979ff;
 }
 
 .state-partners {
-    background: #fff;
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .state-accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .state-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .state-header:hover {
-    background: #e9ecef;
+  background: #e9ecef;
 }
 
 .state-header h4 {
-    margin: 0;
-    color: #333;
-    font-size: 1.1rem;
-    font-weight: 600;
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .toggle-icon {
-    font-size: 0; /* Hide the original '+' text */
-    line-height: 0;
-    display: block; /* Ensure block-level for pseudo-elements */
-    width: 16px; /* Define a fixed size for the icon container */
-    height: 16px; /* Define a fixed size for the icon container */
-    position: relative;
-    color: #666; /* Keep the original color for pseudo-elements */
-    transition: all 0.3s ease;
+  font-size: 0;
+  /* Hide the original '+' text */
+  line-height: 0;
+  display: block;
+  /* Ensure block-level for pseudo-elements */
+  width: 16px;
+  /* Define a fixed size for the icon container */
+  height: 16px;
+  /* Define a fixed size for the icon container */
+  position: relative;
+  color: #666;
+  /* Keep the original color for pseudo-elements */
+  transition: all 0.3s ease;
 }
 
 .toggle-icon::before,
 .toggle-icon::after {
-    content: '';
-    position: absolute;
-    background-color: currentColor; /* Inherit color from parent */
-    transition: transform 0.3s ease;
+  content: '';
+  position: absolute;
+  background-color: currentColor;
+  /* Inherit color from parent */
+  transition: transform 0.3s ease;
 }
 
 /* Horizontal bar */
 .toggle-icon::before {
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
 }
 
 /* Vertical bar */
 .toggle-icon::after {
-    top: 0;
-    left: 50%;
-    width: 2px;
-    height: 100%;
-    transform: translateX(-50%);
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
 }
 
 .state-header.active .toggle-icon::after {
-    transform: translateX(-50%) scaleY(0); /* Collapse vertical bar to create minus */
+  transform: translateX(-50%) scaleY(0);
+  /* Collapse vertical bar to create minus */
 }
 
 .state-header.active .toggle-icon {
-    transform: none; /* Remove previous rotation if any */
+  transform: none;
+  /* Remove previous rotation if any */
 }
 
 .state-header.active .toggle-icon,
 .state-header:hover .toggle-icon {
-  color: var(--primary-color); /* Change color on hover/active */
+  color: var(--primary-color);
+  /* Change color on hover/active */
 }
 
 .state-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding: 0 1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 1rem;
 }
 
 .state-content.active {
-    max-height: 500px;
-    padding: 1rem;
+  max-height: 500px;
+  padding: 1rem;
 }
 
 .state-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .state-content li {
-    padding: 0.5rem 0;
-    color: #666;
-    font-size: 0.95rem;
-    border-bottom: 1px solid #eee;
+  padding: 0.5rem 0;
+  color: #666;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #eee;
 }
 
 .state-content li:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
-    .distribution-content {
-        grid-template-columns: 1fr;
-    }
+  .distribution-content {
+    grid-template-columns: 1fr;
+  }
 
-    .map-container {
-        order: 2;
-    }
+  .map-container {
+    order: 2;
+  }
 
-    .state-partners {
-        order: 1;
-    }
+  .state-partners {
+    order: 1;
+  }
 }
 
 @media (max-width: 768px) {
-    .distribution-section {
-        margin-top: 4rem;
-    }
+  .distribution-section {
+    margin-top: 4rem;
+  }
 
-    .state-header h4 {
-        font-size: 1rem;
-    }
+  .state-header h4 {
+    font-size: 1rem;
+  }
 
-    .state-content li {
-        font-size: 0.9rem;
-    }
+  .state-content li {
+    font-size: 0.9rem;
+  }
 }
