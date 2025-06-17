@@ -590,6 +590,7 @@ header .container {
 /* Products Section */
 .products {
   padding: 60px 0;
+  padding-bottom: 0%;
   background-color: var(--light-gray);
   text-align: center;
 }
@@ -621,13 +622,7 @@ header .container {
   margin: 15px auto 50px;
 }
 
-.products .section-subtitle {
-  /* This rule can override the global .section-subtitle if needed, but for centering, it's covered by the global rule now */
-  /* font-size: 18px; */
-  /* margin-bottom: 40px; */
-  /* line-height: 1.6; */
-}
-
+ 
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -697,7 +692,11 @@ header .container {
 }
 
 .request-sample-button-container {
-  margin-top: 50px;
+  padding-top: 30px;
+    display: flex;
+  justify-content: center;
+  align-items: center; /* Optional: vertically center if needed */
+  margin-top: 50px; /* Adjust as needed */
 }
 
 .btn.primary-large {
@@ -722,7 +721,10 @@ header .container {
 
 /* Services Section */
 .services {
-  padding: 80px 0;
+  padding-top: 0px;
+  padding-left: 80px;
+  padding-bottom: 80px;
+  padding-right: 80px;
   background-color: var(--white);
 }
 
@@ -1375,7 +1377,10 @@ header .container {
 }
 
 .network {
-  padding: 80px 0;
+padding-top: 80px;
+  padding-right: 80px;
+  padding-bottom: 80px;
+  padding-left: 80px;
   background-color: var(--light-gray);
   text-align: center;
 }
