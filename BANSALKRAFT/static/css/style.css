@@ -719,6 +719,10 @@ header .container {
   border-color: var(--primary-color);
 }
 
+#requestsample {
+  padding-top: 100px; /* navbar height se thoda zyada */
+  scroll-margin-top: 100px; /* new CSS property for scroll offset */
+}
 /* Services Section */
 .services {
   padding-top: 0px;
