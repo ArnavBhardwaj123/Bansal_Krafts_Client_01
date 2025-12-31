@@ -7,9 +7,11 @@ class AboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
       color: AppColors.white,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
             'About Bansal Krafts',
@@ -55,22 +57,59 @@ class AboutSection extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: _buildStatItem('40+', 'Years of Excellence'),
-                ),
-                Expanded(
-                  child: _buildStatItem('500+', 'Satisfied Clients'),
-                ),
-                Expanded(
-                  child: _buildStatItem('10+', 'States Covered'),
-                ),
-                Expanded(
-                  child: _buildStatItem('15+', 'Paper Varieties'),
-                ),
-              ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Responsive grid layout
+                if (constraints.maxWidth < 600) {
+                  // Mobile: 2 columns
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: _buildStatItem('40+', 'Years of Excellence'),
+                          ),
+                          Expanded(
+                            child: _buildStatItem('500+', 'Satisfied Clients'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: _buildStatItem('10+', 'States Covered'),
+                          ),
+                          Expanded(
+                            child: _buildStatItem('15+', 'Paper Varieties'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  // Desktop: 4 columns
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: _buildStatItem('40+', 'Years of Excellence'),
+                      ),
+                      Expanded(
+                        child: _buildStatItem('500+', 'Satisfied Clients'),
+                      ),
+                      Expanded(
+                        child: _buildStatItem('10+', 'States Covered'),
+                      ),
+                      Expanded(
+                        child: _buildStatItem('15+', 'Paper Varieties'),
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           ),
         ],
@@ -111,7 +150,7 @@ class AboutSection extends StatelessWidget {
               color: Colors.grey[700],
               height: 1.6,
             ),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
           ),
         ],
       ),
@@ -119,26 +158,36 @@ class AboutSection extends StatelessWidget {
   }
 
   Widget _buildStatItem(String number, String label) {
-    return Column(
-      children: [
-        Text(
-          number,
-          style: const TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            number,
+            style: const TextStyle(
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+              height: 1.2,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textColor,
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.textColor,
+              height: 1.3,
+            ),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

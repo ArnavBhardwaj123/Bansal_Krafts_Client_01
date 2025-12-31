@@ -43,9 +43,11 @@ class ProductsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
       color: AppColors.lightGray,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
             'Our Products',
@@ -71,19 +73,28 @@ class ProductsSection extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 40),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: MediaQuery.of(context).size.width > 1024 ? 3 : 
-                             MediaQuery.of(context).size.width > 768 ? 2 : 1,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: MediaQuery.of(context).size.width > 1024 ? 0.75 : 0.65,
-            ),
-            itemCount: _products.length,
-            itemBuilder: (context, index) {
-              return _buildProductCard(_products[index]);
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final crossAxisCount = constraints.maxWidth > 1024 ? 3 : 
+                                   constraints.maxWidth > 768 ? 2 : 1;
+              // Fixed aspect ratio for consistent card sizing
+              final aspectRatio = constraints.maxWidth > 1024 ? 0.68 : 
+                                 constraints.maxWidth > 768 ? 0.63 : 0.58;
+              
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: aspectRatio,
+                ),
+                itemCount: _products.length,
+                itemBuilder: (context, index) {
+                  return _buildProductCard(_products[index]);
+                },
+              );
             },
           ),
         ],
@@ -101,26 +112,39 @@ class ProductsSection extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: 140,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(
+            height: 180,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(10),
               ),
               color: AppColors.lightGray,
             ),
-            child: ClipRRect(
+              child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(10),
               ),
-              child: Image.asset(
-                product.imagePath,
-                fit: BoxFit.contain,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(
+                  product.imagePath,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: AppColors.lightGray,
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        size: 40,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -128,26 +152,27 @@ class ProductsSection extends StatelessWidget {
                   Text(
                     product.name,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textColor,
+                      height: 1.2,
                     ),
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
-                  Flexible(
-                    child: SingleChildScrollView(
-                      child: Text(
-                        product.description,
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey[700],
-                          height: 1.3,
-                        ),
-                        textAlign: TextAlign.center,
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: Text(
+                      product.description,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey[700],
+                        height: 1.4,
                       ),
+                      textAlign: TextAlign.center,
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

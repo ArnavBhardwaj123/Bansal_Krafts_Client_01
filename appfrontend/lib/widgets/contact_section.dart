@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_strings.dart';
 import '../constants/app_dimensions.dart';
@@ -62,14 +63,28 @@ class _ContactSectionState extends State<ContactSection> {
   }
 
   void _showSuccessDialog() {
+    if (!mounted) return;
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Success'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.check_circle, color: AppColors.primary, size: 28),
+            const SizedBox(width: 10),
+            const Text('Success'),
+          ],
+        ),
         content: const Text('Thank you for contacting us! We will get back to you shortly.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
             child: const Text('OK'),
           ),
         ],
@@ -78,14 +93,27 @@ class _ContactSectionState extends State<ContactSection> {
   }
 
   void _showErrorDialog(String message) {
+    if (!mounted) return;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Error'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+        ),
+        title: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.red, size: 28),
+            const SizedBox(width: 10),
+            const Text('Error'),
+          ],
+        ),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
             child: const Text('OK'),
           ),
         ],
@@ -122,12 +150,14 @@ class _ContactSectionState extends State<ContactSection> {
     final isDesktop = screenWidth > AppDimensions.mobileBreakpoint;
     
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: AppDimensions.paddingMedium, 
         vertical: AppDimensions.paddingXLarge,
       ),
       color: AppColors.white,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
             'Get in Touch',
@@ -159,10 +189,29 @@ class _ContactSectionState extends State<ContactSection> {
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Contact Info
+                  // Contact Info with Address and Map
                   Expanded(
                     flex: 1,
-                    child: _buildContactInfo(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildAddressWithMap(),
+                        const SizedBox(height: 30),
+                        _buildContactItem(
+                          Icons.phone,
+                          'Phone',
+                          '${AppStrings.phone1}\n${AppStrings.phone2}',
+                          () => _makePhoneCall(AppStrings.phone1),
+                        ),
+                        const SizedBox(height: 30),
+                        _buildContactItem(
+                          Icons.email,
+                          'Email',
+                          AppStrings.email,
+                          () => _sendEmail(AppStrings.email),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(width: 40),
                   // Contact Form
@@ -174,60 +223,70 @@ class _ContactSectionState extends State<ContactSection> {
               )
             : Column(
                 children: [
-                  _buildContactInfo(),
+                  _buildAddressWithMap(),
+                  const SizedBox(height: 30),
+                  _buildContactItem(
+                    Icons.phone,
+                    'Phone',
+                    '${AppStrings.phone1}\n${AppStrings.phone2}',
+                    () => _makePhoneCall(AppStrings.phone1),
+                  ),
+                  const SizedBox(height: 30),
+                  _buildContactItem(
+                    Icons.email,
+                    'Email',
+                    AppStrings.email,
+                    () => _sendEmail(AppStrings.email),
+                  ),
                   const SizedBox(height: 40),
                   _buildContactForm(),
                 ],
               ),
-          
-          const SizedBox(height: 40),
-          
-          // Google Maps Section
-          Container(
-            height: AppDimensions.mapHeight,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
-              child: _buildMapWidget(),
-            ),
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildContactInfo() {
+  Widget _buildAddressWithMap() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Address Section
         _buildContactItem(
           Icons.location_on,
           'Correspondence Address',
-          AppStrings.address,
+          'D-10/22,\nSECTOR 8 ROHINI,\nDELHI-110085\nINDIA',
           null,
         ),
-        const SizedBox(height: 30),
-        _buildContactItem(
-          Icons.phone,
-          'Phone',
-          '${AppStrings.phone1}\n${AppStrings.phone2}',
-          () => _makePhoneCall(AppStrings.phone1),
-        ),
-        const SizedBox(height: 30),
-        _buildContactItem(
-          Icons.email,
-          'Email',
-          AppStrings.email,
-          () => _sendEmail(AppStrings.email),
+        const SizedBox(height: 20),
+        // Google Maps Section - matching website layout
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final mapWidth = isMobile ? constraints.maxWidth : 400.0;
+            final mapHeight = isMobile ? 250.0 : 250.0;
+            
+            return Container(
+              width: mapWidth,
+              height: mapHeight,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
+                child: _buildMapWidget(),
+              ),
+            );
+          },
         ),
       ],
     );
@@ -418,52 +477,53 @@ class _ContactSectionState extends State<ContactSection> {
   }
 
   Widget _buildMapWidget() {
-    // For now, show a placeholder with address info
-    // In production, you would configure Google Maps API key
-    return Container(
-      color: AppColors.lightGray,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.location_on,
-            size: 48,
-            color: AppColors.primary,
+    // Google Maps embed URL from the website
+    final String mapsEmbedUrl = AppStrings.googleMapsUrl;
+    
+    // Create HTML with iframe for Google Maps Embed API
+    final String htmlContent = '''
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <iframe 
+        src="$mapsEmbedUrl"
+        width="100%" 
+        height="100%" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</body>
+</html>
+''';
+    
+    return WebViewWidget(
+      controller: WebViewController()
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onPageFinished: (String url) {
+              // Page loaded
+            },
           ),
-          const SizedBox(height: 16),
-          const Text(
-            'Bansal Krafts Pvt Ltd',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textColor,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'D-10/22, SECTOR 8 ROHINI\nDELHI-110085 INDIA',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textColor,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: () => _launchMaps(),
-            icon: const Icon(Icons.directions, size: 18),
-            label: const Text('Get Directions'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppDimensions.borderRadiusSmall),
-              ),
-            ),
-          ),
-        ],
-      ),
+        )
+        ..loadHtmlString(htmlContent),
     );
   }
 

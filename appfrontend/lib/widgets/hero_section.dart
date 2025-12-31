@@ -17,9 +17,11 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       color: AppColors.lightGray,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Hero Content
           Column(
@@ -42,6 +44,7 @@ class HeroSection extends StatelessWidget {
                   color: Colors.grey[700],
                   height: 1.6,
                 ),
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 30),
               Wrap(
@@ -121,6 +124,16 @@ class HeroSection extends StatelessWidget {
                       child: Image.asset(
                         imagePath,
                         fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: AppColors.lightGray,
+                            child: const Icon(
+                              Icons.image_not_supported,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   );

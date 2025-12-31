@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_dimensions.dart';
+import '../constants/app_assets.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/navigation_drawer.dart' show AppNavigationDrawer;
 import '../widgets/hero_section.dart';
@@ -34,13 +35,30 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScroll() {
     final positions = _itemPositionsListener.itemPositions.value;
     if (positions.isNotEmpty) {
-      final firstVisibleIndex = positions
-          .where((position) => position.itemTrailingEdge > 0)
-          .reduce((min, position) => position.index < min.index ? position : min)
-          .index;
-      
+      // Find the first visible item
+      final visiblePositions = positions.where((position) => position.itemTrailingEdge > 0);
+      if (visiblePositions.isNotEmpty) {
+        // Check if hero section (index 0) is still visible
+        final heroPosition = positions.firstWhere(
+          (position) => position.index == 0,
+          orElse: () => positions.first,
+        );
+        
+        // Show sticky header only when hero section is scrolled out of view
+        // Check if hero section's trailing edge is less than 0 (completely scrolled past)
+        final shouldShowSticky = heroPosition.itemTrailingEdge <= 0;
+        
+        setState(() {
+          _showStickyHeader = shouldShowSticky;
+        });
+      } else {
+        setState(() {
+          _showStickyHeader = false;
+        });
+      }
+    } else {
       setState(() {
-        _showStickyHeader = firstVisibleIndex > 0;
+        _showStickyHeader = false;
       });
     }
   }
@@ -64,7 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.lightGray,
-      appBar: PreferredSize(
+      // Hide AppBar when sticky header is showing to prevent double navbar
+      appBar: _showStickyHeader ? null : PreferredSize(
         preferredSize: const Size.fromHeight(AppDimensions.appBarHeight),
         child: const CustomAppBar(),
       ),
@@ -123,37 +142,70 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                child: Row(
-                  children: [
-                    const SizedBox(width: AppDimensions.paddingMedium),
-                    Image.asset(
-                      'assets/images/logo.png', // Update with your logo path
-                      height: 40,
-                      fit: BoxFit.contain,
-                    ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () => _scrollToSection(0),
-                      child: const Text('Home', style: TextStyle(color: AppColors.textColor)),
-                    ),
-                    TextButton(
-                      onPressed: () => _scrollToSection(1),
-                      child: const Text('About', style: TextStyle(color: AppColors.textColor)),
-                    ),
-                    TextButton(
-                      onPressed: () => _scrollToSection(2),
-                      child: const Text('Products', style: TextStyle(color: AppColors.textColor)),
-                    ),
-                    TextButton(
-                      onPressed: () => _scrollToSection(4),
-                      child: const Text('Network', style: TextStyle(color: AppColors.textColor)),
-                    ),
-                    TextButton(
-                      onPressed: () => _scrollToSection(5),
-                      child: const Text('Contact', style: TextStyle(color: AppColors.textColor)),
-                    ),
-                    const SizedBox(width: AppDimensions.paddingMedium),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Hide navigation on small screens, show menu button
+                    if (constraints.maxWidth < 768) {
+                      return Row(
+                        children: [
+                          const SizedBox(width: AppDimensions.paddingMedium),
+                          Image.asset(
+                            AppAssets.logo,
+                            height: 40,
+                            fit: BoxFit.contain,
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.menu, color: AppColors.textColor),
+                            onPressed: () {
+                              Scaffold.of(context).openEndDrawer();
+                            },
+                          ),
+                          const SizedBox(width: AppDimensions.paddingMedium),
+                        ],
+                      );
+                    }
+                    // Desktop layout with proper constraints
+                    return Row(
+                      children: [
+                        const SizedBox(width: AppDimensions.paddingMedium),
+                        Image.asset(
+                          AppAssets.logo,
+                          height: 40,
+                          fit: BoxFit.contain,
+                        ),
+                        const Spacer(),
+                        Flexible(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextButton(
+                                onPressed: () => _scrollToSection(0),
+                                child: const Text('Home', style: TextStyle(color: AppColors.textColor)),
+                              ),
+                              TextButton(
+                                onPressed: () => _scrollToSection(1),
+                                child: const Text('About', style: TextStyle(color: AppColors.textColor)),
+                              ),
+                              TextButton(
+                                onPressed: () => _scrollToSection(2),
+                                child: const Text('Products', style: TextStyle(color: AppColors.textColor)),
+                              ),
+                              TextButton(
+                                onPressed: () => _scrollToSection(4),
+                                child: const Text('Network', style: TextStyle(color: AppColors.textColor)),
+                              ),
+                              TextButton(
+                                onPressed: () => _scrollToSection(5),
+                                child: const Text('Contact', style: TextStyle(color: AppColors.textColor)),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: AppDimensions.paddingMedium),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
