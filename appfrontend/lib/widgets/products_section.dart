@@ -3,6 +3,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_assets.dart';
 import '../models/product.dart';
 import 'hover_card.dart';
+import 'safe_image.dart';
 
 class ProductsSection extends StatelessWidget {
   const ProductsSection({super.key});
@@ -112,32 +113,22 @@ class ProductsSection extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: 180,
+            height: 90,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(10),
               ),
               color: AppColors.lightGray,
             ),
-              child: ClipRRect(
+            child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(10),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Image.asset(
-                  product.imagePath,
+                child: SafeImage(
+                  imagePath: product.imagePath,
                   fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: AppColors.lightGray,
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        size: 40,
-                        color: Colors.grey,
-                      ),
-                    );
-                  },
                 ),
               ),
             ),

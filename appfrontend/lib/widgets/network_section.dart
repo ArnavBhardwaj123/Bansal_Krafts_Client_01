@@ -3,6 +3,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_assets.dart';
 import '../models/distribution_partner.dart';
 import 'hover_card.dart';
+import 'safe_image.dart';
 
 class NetworkSection extends StatefulWidget {
   const NetworkSection({super.key});
@@ -111,19 +112,17 @@ class _NetworkSectionState extends State<NetworkSection> {
             color: AppColors.primary,
           ),
           const SizedBox(height: 40),
-          // Client Logos
           _buildClientLogosSection(),
           const SizedBox(height: 60),
-          // Distribution Partners
           _buildDistributionPartnersSection(),
           const SizedBox(height: 60),
-          // Services Section
           _buildServicesSection(),
         ],
       ),
     );
   }
 
+  // ---------------- CLIENT LOGOS ----------------
   Widget _buildClientLogosSection() {
     final clientLogos = [
       {'name': 'DJS PRINTERS PVT LTD', 'image': AppAssets.djsLogo},
@@ -173,8 +172,8 @@ class _NetworkSectionState extends State<NetworkSection> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(15),
-                        child: Image.asset(
-                          clientLogos[index]['image'] as String,
+                        child: SafeImage(
+                          imagePath: clientLogos[index]['image'] as String,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -201,6 +200,7 @@ class _NetworkSectionState extends State<NetworkSection> {
     );
   }
 
+  // ---------------- DISTRIBUTION PARTNERS ----------------
   Widget _buildDistributionPartnersSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,16 +222,11 @@ class _NetworkSectionState extends State<NetworkSection> {
           ),
         ),
         const SizedBox(height: 30),
-        // Map Image
         Container(
           margin: const EdgeInsets.only(bottom: 30),
-          child: Image.asset(
-            AppAssets.indianMap,
-            fit: BoxFit.contain,
-          ),
+          child: SafeImage(imagePath: AppAssets.indianMap),
         ),
-        // State Accordion
-        ..._partners.map((partner) => _buildStateAccordion(partner)),
+        ..._partners.map(_buildStateAccordion),
       ],
     );
   }
@@ -259,7 +254,7 @@ class _NetworkSectionState extends State<NetworkSection> {
                 _expandedStates[partner.state] = !isExpanded;
               });
             },
-            child: Container(
+            child: Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -283,26 +278,23 @@ class _NetworkSectionState extends State<NetworkSection> {
           if (isExpanded)
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.lightGray,
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(8),
-                ),
-              ),
+              color: AppColors.lightGray,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: partner.partners.map((name) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      '• $name',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
+                children: partner.partners
+                    .map(
+                      (name) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          '• $name',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[700],
+                          ),
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    )
+                    .toList(),
               ),
             ),
         ],
@@ -310,146 +302,123 @@ class _NetworkSectionState extends State<NetworkSection> {
     );
   }
 
+  // ---------------- SERVICES ----------------
   Widget _buildServicesSection() {
     final services = [
       {
         'title': 'Bulk Supply',
-        'description': 'Efficient bulk paper supply with flexible ordering options and competitive pricing for large-scale requirements.',
+        'description':
+            'Efficient bulk paper supply with flexible ordering options and competitive pricing for large-scale requirements.',
         'icon': Icons.inventory,
       },
       {
         'title': 'Quality Assurance',
-        'description': 'Rigorous quality testing and certification to ensure all paper products meet industry standards and specifications.',
+        'description':
+            'Rigorous quality testing and certification to ensure all paper products meet industry standards.',
         'icon': Icons.verified,
       },
       {
         'title': 'Custom Solutions',
-        'description': 'Tailored paper solutions and specifications to meet your specific business requirements and applications.',
+        'description':
+            'Tailored paper solutions to meet your specific business requirements.',
         'icon': Icons.build,
       },
       {
         'title': 'Just-in-Time Delivery',
-        'description': 'Reliable and timely delivery services to ensure your production schedules are maintained without interruption.',
+        'description':
+            'Reliable and timely delivery services to ensure your production schedules are maintained without interruption.',
         'icon': Icons.local_shipping,
       },
       {
         'title': 'End-to-End Solutions',
-        'description': 'Trust Bansal Krafts for a holistic approach to paper solutions, where every step is meticulously crafted to meet your unique requirements.',
+        'description':
+            'A holistic approach to paper solutions tailored to your needs.',
         'icon': Icons.work,
       },
       {
         'title': 'Best Price Guaranteed',
-        'description': 'We offer competitive pricing with a best-price guarantee, ensuring you get the most value for your investment in paper products.',
+        'description':
+            'Competitive pricing with best-value assurance.',
         'icon': Icons.attach_money,
       },
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Our Services',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textColor,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final crossAxisCount =
+            constraints.maxWidth > 1024 ? 3 : constraints.maxWidth > 768 ? 2 : 1;
+
+        final aspectRatio =
+            constraints.maxWidth > 1024 ? 0.7 : constraints.maxWidth > 768 ? 0.65 : 0.6;
+
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            childAspectRatio: aspectRatio,
           ),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          'Comprehensive paper trading and supply chain solutions',
-          style: TextStyle(
-            fontSize: 14,
-            color: AppColors.textColor,
-          ),
-        ),
-        const SizedBox(height: 30),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final crossAxisCount = constraints.maxWidth > 1024 ? 3 : 
-                                 constraints.maxWidth > 768 ? 2 : 1;
-            // Fixed aspect ratio for consistent card sizing - reduced for better proportions
-            final aspectRatio = constraints.maxWidth > 1024 ? 0.75 : 
-                               constraints.maxWidth > 768 ? 0.7 : 0.65;
-            
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                childAspectRatio: aspectRatio,
-              ),
-              itemCount: services.length,
-              itemBuilder: (context, index) {
-                return _buildServiceCard(services[index]);
-              },
-            );
+          itemCount: services.length,
+          itemBuilder: (context, index) {
+            return _buildServiceCard(services[index]);
           },
-        ),
-      ],
+        );
+      },
     );
   }
 
+  // ---------------- FIXED SERVICE CARD ----------------
   Widget _buildServiceCard(Map<String, dynamic> service) {
     return HoverCard(
       borderRadius: BorderRadius.circular(10),
       color: AppColors.white,
-      child: SizedBox(
-        height: 200,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  service['icon'] as IconData,
-                  color: AppColors.primary,
-                  size: 28,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
               ),
-              const SizedBox(height: 12),
-              Text(
-                service['title'] as String,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textColor,
-                  height: 1.2,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              child: Icon(
+                service['icon'] as IconData,
+                color: AppColors.primary,
+                size: 30,
               ),
-              const SizedBox(height: 10),
-              Flexible(
-                child: Text(
-                  service['description'] as String,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[700],
-                    height: 1.4,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              service['title'] as String,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textColor,
               ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              service['description'] as String,
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.grey[700],
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );
   }
 }
-

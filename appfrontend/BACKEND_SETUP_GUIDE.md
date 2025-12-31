@@ -568,3 +568,5 @@ CORS_ALLOW_ALL_ORIGINS = False  # Never allow all in production
 
 **Your backend is now ready!** The Flutter app will be able to submit contact forms through this API, and emails will be sent just like your website backend.
 
+
+

@@ -12,6 +12,7 @@ import '../widgets/request_sample_section.dart';
 import '../widgets/network_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
+import '../widgets/safe_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,30 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScroll() {
     final positions = _itemPositionsListener.itemPositions.value;
     if (positions.isNotEmpty) {
-      // Find the first visible item
-      final visiblePositions = positions.where((position) => position.itemTrailingEdge > 0);
-      if (visiblePositions.isNotEmpty) {
-        // Check if hero section (index 0) is still visible
-        final heroPosition = positions.firstWhere(
-          (position) => position.index == 0,
-          orElse: () => positions.first,
-        );
-        
-        // Show sticky header only when hero section is scrolled out of view
-        // Check if hero section's trailing edge is less than 0 (completely scrolled past)
-        final shouldShowSticky = heroPosition.itemTrailingEdge <= 0;
-        
-        setState(() {
-          _showStickyHeader = shouldShowSticky;
-        });
-      } else {
-        setState(() {
-          _showStickyHeader = false;
-        });
-      }
-    } else {
+      final firstVisibleIndex = positions
+          .where((position) => position.itemTrailingEdge > 0)
+          .reduce((min, position) => position.index < min.index ? position : min)
+          .index;
+      
       setState(() {
-        _showStickyHeader = false;
+        _showStickyHeader = firstVisibleIndex > 0;
       });
     }
   }
@@ -82,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.lightGray,
-      // Hide AppBar when sticky header is showing to prevent double navbar
-      appBar: _showStickyHeader ? null : PreferredSize(
+      appBar: PreferredSize(
         preferredSize: const Size.fromHeight(AppDimensions.appBarHeight),
         child: const CustomAppBar(),
       ),
@@ -144,13 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    // Hide navigation on small screens, show menu button
-                    if (constraints.maxWidth < 768) {
+                    final isMobile = constraints.maxWidth < 600;
+                    
+                    if (isMobile) {
+                      // Mobile: Show logo and menu button
                       return Row(
                         children: [
                           const SizedBox(width: AppDimensions.paddingMedium),
-                          Image.asset(
-                            AppAssets.logo,
+                          SafeImage(
+                            imagePath: AppAssets.logo,
                             height: 40,
                             fit: BoxFit.contain,
                           ),
@@ -158,53 +143,57 @@ class _HomeScreenState extends State<HomeScreen> {
                           IconButton(
                             icon: const Icon(Icons.menu, color: AppColors.textColor),
                             onPressed: () {
-                              Scaffold.of(context).openEndDrawer();
+                              _scaffoldKey.currentState?.openEndDrawer();
                             },
+                          ),
+                          const SizedBox(width: AppDimensions.paddingSmall),
+                        ],
+                      );
+                    } else {
+                      // Desktop: Show logo and navigation buttons
+                      return Row(
+                        children: [
+                          const SizedBox(width: AppDimensions.paddingMedium),
+                          SafeImage(
+                            imagePath: AppAssets.logo,
+                            height: 40,
+                            fit: BoxFit.contain,
+                          ),
+                          const Spacer(),
+                          Flexible(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => _scrollToSection(0),
+                                    child: const Text('Home', style: TextStyle(color: AppColors.textColor)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => _scrollToSection(1),
+                                    child: const Text('About', style: TextStyle(color: AppColors.textColor)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => _scrollToSection(2),
+                                    child: const Text('Products', style: TextStyle(color: AppColors.textColor)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => _scrollToSection(4),
+                                    child: const Text('Network', style: TextStyle(color: AppColors.textColor)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => _scrollToSection(5),
+                                    child: const Text('Contact', style: TextStyle(color: AppColors.textColor)),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           const SizedBox(width: AppDimensions.paddingMedium),
                         ],
                       );
                     }
-                    // Desktop layout with proper constraints
-                    return Row(
-                      children: [
-                        const SizedBox(width: AppDimensions.paddingMedium),
-                        Image.asset(
-                          AppAssets.logo,
-                          height: 40,
-                          fit: BoxFit.contain,
-                        ),
-                        const Spacer(),
-                        Flexible(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              TextButton(
-                                onPressed: () => _scrollToSection(0),
-                                child: const Text('Home', style: TextStyle(color: AppColors.textColor)),
-                              ),
-                              TextButton(
-                                onPressed: () => _scrollToSection(1),
-                                child: const Text('About', style: TextStyle(color: AppColors.textColor)),
-                              ),
-                              TextButton(
-                                onPressed: () => _scrollToSection(2),
-                                child: const Text('Products', style: TextStyle(color: AppColors.textColor)),
-                              ),
-                              TextButton(
-                                onPressed: () => _scrollToSection(4),
-                                child: const Text('Network', style: TextStyle(color: AppColors.textColor)),
-                              ),
-                              TextButton(
-                                onPressed: () => _scrollToSection(5),
-                                child: const Text('Contact', style: TextStyle(color: AppColors.textColor)),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: AppDimensions.paddingMedium),
-                      ],
-                    );
                   },
                 ),
               ),

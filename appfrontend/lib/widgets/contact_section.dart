@@ -151,8 +151,10 @@ class _ContactSectionState extends State<ContactSection> {
     
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppDimensions.paddingMedium, 
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width > 768 
+          ? AppDimensions.paddingMedium 
+          : AppDimensions.paddingSmall, 
         vertical: AppDimensions.paddingXLarge,
       ),
       color: AppColors.white,
@@ -213,7 +215,7 @@ class _ContactSectionState extends State<ContactSection> {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 40),
+                  SizedBox(width: MediaQuery.of(context).size.width > 1024 ? 40 : 20),
                   // Contact Form
                   Expanded(
                     flex: 1,

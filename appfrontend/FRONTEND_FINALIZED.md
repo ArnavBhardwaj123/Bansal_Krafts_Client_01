@@ -87,3 +87,5 @@ The app is ready to connect to your backend. Follow the **BACKEND_SETUP_GUIDE.md
 
 **The frontend is complete! You can now focus on building the backend.** 🎊
 
+
+

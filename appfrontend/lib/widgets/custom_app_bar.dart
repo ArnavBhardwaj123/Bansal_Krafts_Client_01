@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_assets.dart';
+import 'safe_image.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -15,8 +16,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 2,
       shadowColor: Colors.black12,
       toolbarHeight: 80,
-      title: Image.asset(
-        AppAssets.logo,
+      title: SafeImage(
+        imagePath: AppAssets.logo,
         height: 65,
         fit: BoxFit.contain,
       ),

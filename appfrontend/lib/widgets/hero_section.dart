@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_strings.dart';
 import '../constants/app_assets.dart';
+import 'safe_image.dart';
 
 class HeroSection extends StatelessWidget {
   final Function() onGetQuote;
@@ -121,19 +122,9 @@ class HeroSection extends StatelessWidget {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        imagePath,
+                      child: SafeImage(
+                        imagePath: imagePath,
                         fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: AppColors.lightGray,
-                            child: const Icon(
-                              Icons.image_not_supported,
-                              size: 50,
-                              color: Colors.grey,
-                            ),
-                          );
-                        },
                       ),
                     ),
                   );
