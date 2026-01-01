@@ -66,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.lightGray,
+      // Always show the big CustomAppBar (user wants to keep this one)
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(AppDimensions.appBarHeight),
         child: const CustomAppBar(),
@@ -106,98 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           
-          // Sticky Header
-          if (_showStickyHeader)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AnimatedContainer(
-                duration: AppDimensions.stickyHeaderDuration,
-                height: AppDimensions.stickyHeaderHeight,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isMobile = constraints.maxWidth < 600;
-                    
-                    if (isMobile) {
-                      // Mobile: Show logo and menu button
-                      return Row(
-                        children: [
-                          const SizedBox(width: AppDimensions.paddingMedium),
-                          SafeImage(
-                            imagePath: AppAssets.logo,
-                            height: 40,
-                            fit: BoxFit.contain,
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: const Icon(Icons.menu, color: AppColors.textColor),
-                            onPressed: () {
-                              _scaffoldKey.currentState?.openEndDrawer();
-                            },
-                          ),
-                          const SizedBox(width: AppDimensions.paddingSmall),
-                        ],
-                      );
-                    } else {
-                      // Desktop: Show logo and navigation buttons
-                      return Row(
-                        children: [
-                          const SizedBox(width: AppDimensions.paddingMedium),
-                          SafeImage(
-                            imagePath: AppAssets.logo,
-                            height: 40,
-                            fit: BoxFit.contain,
-                          ),
-                          const Spacer(),
-                          Flexible(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextButton(
-                                    onPressed: () => _scrollToSection(0),
-                                    child: const Text('Home', style: TextStyle(color: AppColors.textColor)),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => _scrollToSection(1),
-                                    child: const Text('About', style: TextStyle(color: AppColors.textColor)),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => _scrollToSection(2),
-                                    child: const Text('Products', style: TextStyle(color: AppColors.textColor)),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => _scrollToSection(4),
-                                    child: const Text('Network', style: TextStyle(color: AppColors.textColor)),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => _scrollToSection(5),
-                                    child: const Text('Contact', style: TextStyle(color: AppColors.textColor)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: AppDimensions.paddingMedium),
-                        ],
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
+          // Sticky Header removed - keeping only the big CustomAppBar
         ],
       ),
     );

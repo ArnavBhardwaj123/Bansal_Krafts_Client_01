@@ -31,7 +31,13 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-n5c*=sq*-xviir(65=3n7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,10.0.2.2', cast=Csv())
+# ALLOWED_HOSTS - explicitly include all needed hosts for development
+# 10.0.2.2 is the special IP for Android emulator to access host machine
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.2.2']
+# Also allow from .env if provided
+env_hosts = config('ALLOWED_HOSTS', default='', cast=Csv())
+if env_hosts:
+    ALLOWED_HOSTS.extend([h for h in env_hosts if h not in ALLOWED_HOSTS])
 
 
 # Application definition
@@ -179,11 +185,12 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Email Configuration (same as website backend)
+# Email Configuration (same as website backend - using same .env variable names)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', config('EMAIL_HOST_USER', default=''))
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', config('EMAIL_HOST_PASSWORD', default=''))
-DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER', config('EMAIL_HOST_USER', default='noreply@bansalkrafts.com'))
+EMAIL_HOST_USER = os.getenv('EMAILHOSTUSER')  # Match website format (no underscores)
+EMAIL_HOST_PASSWORD = os.getenv('EMAILHOSTPASSWORD')  # Match website format (no underscores)
+# DEFAULT_FROM_EMAIL will default to EMAIL_HOST_USER if not set, matching website behavior
+DEFAULT_FROM_EMAIL = os.getenv('EMAILHOSTUSER') or 'noreply@bansalkrafts.com'
