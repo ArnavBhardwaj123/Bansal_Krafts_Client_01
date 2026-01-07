@@ -277,7 +277,7 @@ class _ContactSectionState extends State<ContactSection> {
                 borderRadius: BorderRadius.circular(AppDimensions.borderRadiusMedium),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -414,7 +414,7 @@ class _ContactSectionState extends State<ContactSection> {
                 elevation: 2,
               ).copyWith(
                 overlayColor: WidgetStateProperty.all(
-                  AppColors.primary.withOpacity(0.1),
+                  AppColors.primary.withValues(alpha: 0.1),
                 ),
               ),
               child: _isLoading
@@ -529,14 +529,6 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Future<void> _launchMaps() async {
-    const String address = 'D-10/22, SECTOR 8 ROHINI, DELHI-110085 INDIA';
-    final Uri mapsUri = Uri.parse('https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(address)}');
-    if (await canLaunchUrl(mapsUri)) {
-      await launchUrl(mapsUri, mode: LaunchMode.externalApplication);
-    }
-  }
-
   Widget _buildContactItem(
     IconData icon,
     String title,
@@ -552,7 +544,7 @@ class _ContactSectionState extends State<ContactSection> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: AppColors.primary, size: 20),

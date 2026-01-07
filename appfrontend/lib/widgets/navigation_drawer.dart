@@ -35,7 +35,7 @@ class AppNavigationDrawer extends StatelessWidget {
                 Text(
                   'Premium Paper Supplier',
                   style: TextStyle(
-                    color: AppColors.white.withOpacity(0.9),
+                    color: AppColors.white.withValues(alpha: 0.9),
                     fontSize: 14,
                   ),
                 ),

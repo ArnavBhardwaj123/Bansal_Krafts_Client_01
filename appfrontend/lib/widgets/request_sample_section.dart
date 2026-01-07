@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
-import '../constants/app_strings.dart';
 
 class RequestSampleSection extends StatelessWidget {
   const RequestSampleSection({super.key});

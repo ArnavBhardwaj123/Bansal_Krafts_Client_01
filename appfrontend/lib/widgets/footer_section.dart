@@ -36,7 +36,7 @@ class FooterSection extends StatelessWidget {
                 '© 2024 Bansal Krafts Pvt Ltd. All rights reserved.',
                 style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.white.withOpacity(0.8),
+                  color: AppColors.white.withValues(alpha: 0.8),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -69,7 +69,7 @@ class FooterSection extends StatelessWidget {
                       'Your trusted partner for high-quality paper products since 1979.',
                       style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.white.withOpacity(0.8),
+                        color: AppColors.white.withValues(alpha: 0.8),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -218,7 +218,7 @@ class FooterSection extends StatelessWidget {
               'Your trusted partner for high-quality paper products since 1979.',
               style: TextStyle(
                 fontSize: 14,
-                color: AppColors.white.withOpacity(0.8),
+                        color: AppColors.white.withValues(alpha: 0.8),
               ),
             ),
             const SizedBox(height: 20),
@@ -348,7 +348,7 @@ class FooterSection extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 14,
-            color: AppColors.white.withOpacity(0.8),
+              color: AppColors.white.withValues(alpha: 0.8),
           ),
         ),
       ),
@@ -361,7 +361,7 @@ class FooterSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 2),
-          child: Icon(icon, size: 16, color: AppColors.white.withOpacity(0.8)),
+          child: Icon(icon, size: 16, color: AppColors.white.withValues(alpha: 0.8)),
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -369,7 +369,7 @@ class FooterSection extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 14,
-              color: AppColors.white.withOpacity(0.8),
+              color: AppColors.white.withValues(alpha: 0.8),
               height: 1.5,
             ),
           ),

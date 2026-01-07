@@ -165,7 +165,7 @@ class _NetworkSectionState extends State<NetworkSection> {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                                color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 5,
                           ),
                         ],
@@ -241,7 +241,7 @@ class _NetworkSectionState extends State<NetworkSection> {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
           ),
         ],
@@ -384,7 +384,7 @@ class _NetworkSectionState extends State<NetworkSection> {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(

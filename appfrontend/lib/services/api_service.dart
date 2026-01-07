@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 /// API Service for backend communication
@@ -45,17 +46,17 @@ class ApiService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return true;
       } else {
-        // Log error for debugging
-        print('API Error: ${response.statusCode} - ${response.body}');
+        // Log error for debugging without crashing UI
+        debugPrint('API Error: ${response.statusCode} - ${response.body}');
         return false;
       }
     } on http.ClientException catch (e) {
       // Network error
-      print('Network Error: $e');
+      debugPrint('Network Error: $e');
       return false;
     } catch (e) {
       // Other errors
-      print('Error submitting contact form: $e');
+      debugPrint('Error submitting contact form: $e');
       return false;
     }
   }

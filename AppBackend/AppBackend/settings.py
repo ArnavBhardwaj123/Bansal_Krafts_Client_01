@@ -26,10 +26,12 @@ load_dotenv(dotenv_path)
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-n5c*=sq*-xviir(65=3n7)p$vybdpse0959^%t*j3g*f6v%$b8')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+# Ensure DEBUG is a real boolean, not a string, so settings that depend on it
+# (like CORS_ALLOW_ALL_ORIGINS) receive the correct type.
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # ALLOWED_HOSTS - explicitly include all needed hosts for development
 # 10.0.2.2 is the special IP for Android emulator to access host machine
@@ -59,7 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CORS middleware
+    'corsheaders.middleware.CorsMiddleware',  
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -185,12 +187,15 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Email Configuration (same as website backend - using same .env variable names)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAILHOSTUSER')  # Match website format (no underscores)
-EMAIL_HOST_PASSWORD = os.getenv('EMAILHOSTPASSWORD')  # Match website format (no underscores)
-# DEFAULT_FROM_EMAIL will default to EMAIL_HOST_USER if not set, matching website behavior
-DEFAULT_FROM_EMAIL = os.getenv('EMAILHOSTUSER') or 'noreply@bansalkrafts.com'
+
+EMAIL_HOST_USER = os.getenv('EMAILHOSTUSER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAILHOSTPASSWORD')
+
+# ✅ EXPLICIT & SAFE
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+

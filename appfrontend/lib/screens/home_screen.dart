@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_dimensions.dart';
-import '../constants/app_assets.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/navigation_drawer.dart' show AppNavigationDrawer;
 import '../widgets/hero_section.dart';
@@ -12,7 +11,6 @@ import '../widgets/request_sample_section.dart';
 import '../widgets/network_section.dart';
 import '../widgets/contact_section.dart';
 import '../widgets/footer_section.dart';
-import '../widgets/safe_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,29 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ItemScrollController _scrollController = ItemScrollController();
-  final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _showStickyHeader = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _itemPositionsListener.itemPositions.addListener(_onScroll);
-  }
-
-  void _onScroll() {
-    final positions = _itemPositionsListener.itemPositions.value;
-    if (positions.isNotEmpty) {
-      final firstVisibleIndex = positions
-          .where((position) => position.itemTrailingEdge > 0)
-          .reduce((min, position) => position.index < min.index ? position : min)
-          .index;
-      
-      setState(() {
-        _showStickyHeader = firstVisibleIndex > 0;
-      });
-    }
-  }
 
   void _scrollToSection(int index) {
     _scrollController.scrollTo(
@@ -57,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    _itemPositionsListener.itemPositions.removeListener(_onScroll);
     super.dispose();
   }
 
@@ -80,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           ScrollablePositionedList.builder(
             itemScrollController: _scrollController,
-            itemPositionsListener: _itemPositionsListener,
             itemCount: 7,
             itemBuilder: (context, index) {
               switch (index) {
