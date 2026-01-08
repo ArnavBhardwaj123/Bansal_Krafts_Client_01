@@ -33,9 +33,10 @@ SECRET_KEY = config('SECRET_KEY')
 # (like CORS_ALLOW_ALL_ORIGINS) receive the correct type.
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# ALLOWED_HOSTS - explicitly include all needed hosts for development
+# ALLOWED_HOSTS - explicitly include all needed hosts
 # 10.0.2.2 is the special IP for Android emulator to access host machine
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.2.2']
+# 68.178.171.155 is the production server IP
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.2.2', '68.178.171.155']
 # Also allow from .env if provided
 env_hosts = config('ALLOWED_HOSTS', default='', cast=Csv())
 if env_hosts:
